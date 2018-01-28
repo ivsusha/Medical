@@ -1,0 +1,97 @@
+<div class="container">  
+<form>
+    <div class="form-group row">
+    <div class="col-sm-5 col-md-4">
+        <div class="header" >
+            <label>Ось Y</label>
+          </div>
+  </div>
+  <div class="col-sm-5 col-md-4">
+        <div class="header" >
+            <label>Ось X</label>
+          </div>
+  </div>
+  <div class="col-sm-5 col-md-4">
+        <div class="header" >
+            <label>Вывод</label>
+          </div>
+  </div>
+    </div>
+  <div class="form-group row">
+    
+    <div class="col-sm-5 col-md-4">
+        <div class="radio" >
+            <label><input type="radio" name="optradio"value="region" [(ngModel)]="paramY">Регион</label>
+          </div>
+  </div>
+  <div class="col-sm-5 col-md-4">
+    <div class="radio" >
+        <label><input type="radio" name="optradio1"value="region" [(ngModel)]="paramX">Регион</label>
+      </div>
+</div>
+<div class="col-sm-5 col-md-4">
+  <div class="radio" >
+      <label><input type="radio" name="optradio3"value="output" [(ngModel)]="rating">Рейтинг</label>
+    </div>
+</div>
+
+  </div>
+  <div class="form-group row">
+      <div class="col-sm-5 col-md-4">
+          <div class="radio">
+              <label><input type="radio" name="optradio" value="city" [(ngModel)]="paramY">Регион.Город</label>
+            </div>
+      
+  </div>
+  <div class="col-sm-5 col-md-4">
+    <div class="radio">
+        <label><input type="radio" name="optradio1" value="city" [(ngModel)]="paramX">Регион.Город</label>
+      </div>
+
+</div>
+<div class="col-sm-5 col-md-4">
+  <div class="radio" >
+      <label><input type="radio" name="optradio3"value="output" [(ngModel)]="proc">Процент</label>
+    </div>
+</div>
+  </div>
+  <div class="form-group row">
+      <div class="col-sm-5 col-md-4">
+          <div class="radio">
+              <label><input type="radio" name="optradio" value="post" [(ngModel)]="paramY">Профессия</label>
+            </div>
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <div class="radio">
+            <label><input type="radio" name="optradio1" value="post" [(ngModel)]="paramX">Профессия</label>
+          </div>
+    </div>
+  </div>
+  <div class="form-group row">
+      <div class="col-sm-5 col-md-4">
+          <div class="radio">
+              <label><input type="radio" name="optradio" value="preparation" [(ngModel)]="paramY">Препарат</label>
+            </div>
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <div class="radio">
+            <label><input type="radio" name="optradio1" value="preparation" [(ngModel)]="paramX">Препарат</label>
+          </div>
+    </div>
+  </div>
+  <div class="form-group row">
+      <div class="col-sm-5 col-md-4">
+          <div class="radio">
+              <label><input type="radio" name="optradio" value="pathology" [(ngModel)]="paramY">Патология</label>
+            </div>
+      </div>
+      <div class="col-sm-5 col-md-4">
+        <div class="radio">
+            <label><input type="radio" name="optradio1" value="pathology" [(ngModel)]="paramX">Патология</label>
+          </div>
+    </div>
+  </div>
+</form>
+<button (click)="onChart(paramX,paramY)">Вывести</button>
+</div>
+

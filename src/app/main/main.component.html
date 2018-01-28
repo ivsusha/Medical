@@ -1,0 +1,298 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <div class=" header">
+        <label>Параметры фильтра</label>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-3 col-md-2">
+      <label for="sel0">Регион:</label>
+    </div>
+    <div class="col-xs-3 col-md-3 col-lg-3">
+      <div class="form-group">
+
+        <ss-multiselect-dropdown [options]="myRegionOptions"[texts]="myTexts" [settings]=" multiListSet" [(ngModel)]="myRegionModel" id="sel10"></ss-multiselect-dropdown>
+
+
+      </div>
+    </div>
+
+    <div class="col-xs-3 col-md-2 ">
+      <label for="sel11">Насел.пункт:</label>
+    </div>
+    <div class="col-xs-3 col-md-3 col-lg-3">
+      <div class="form-group">
+        <ss-multiselect-dropdown [texts]="myTexts" [options]="myCityOptions" [settings]=" multiListSet" [(ngModel)]="myCityModel" id="sel11"></ss-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3 col-md-2">
+      <label for="sel2">Профессия:</label>
+    </div>
+    <div class="col-xs-9 col-md-10">
+      <div class="form-group">
+
+        <ss-multiselect-dropdown [texts]="myTexts" [options]="myPostOptions" [settings]=" multiListSet" [(ngModel)]="mypostModel" id="sel2"></ss-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-2 col-md-2">
+      <label for="sel3">Год c:</label>
+    </div>
+    <div class="col-xs-2 col-md-2 col-lg-2">
+      <div class="form-group">
+
+        <select class="form-control" id="sel3" [(ngModel)]="forYear1">
+          <option *ngFor="let entry of year">{{entry}}</option>
+
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-2 col-md-1"></div>
+    <div class="col-xs-2 col-md-2">
+      <label for="sel4">Квартал c:</label>
+    </div>
+    <div class="col-xs-2 col-md-1">
+      <div class="form-group">
+
+        <ss-multiselect-dropdown [options]="myQuartals"[texts]="myTexts" [(ngModel)]="myqModelSt" [settings]="mySettings" id="sel4"></ss-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-2 col-md-2 col-lg-2">
+      <label for="sel5">Год по:</label>
+    </div>
+    <div class="col-xs-2 col-md-2">
+      <div class="form-group">
+
+        <select class="form-control" id="sel5" [(ngModel)]="forYear2">
+          <option *ngFor="let entry of year">{{entry}}</option>
+
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-2 col-md-1"></div>
+    <div class="col-xs-2 col-md-2">
+      <label for="sel4">Квартал по:</label>
+    </div>
+    <div class="col-xs-2 col-md-2">
+      <div class="form-group">
+
+        <ss-multiselect-dropdown [options]="myQuartals"[texts]="myTexts" [settings]="mySettings" [(ngModel)]="myqModelEnd" id="sel4"></ss-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-3 col-md-2">
+      <label for="sel7">Патологии:</label>
+    </div>
+    <div class="col-xs-3 col-md-1">
+      <div class="form-group">
+      <!--
+        <div class="form-group">
+
+          <select multiple class="form-control" id="Select1" [(ngModel)]="myPatModel" style="width:670px;">
+            <option *ngFor="let entry of mainArray | search :{'post':mypostModel,
+        'city':myCityModel,'region':myRegionModel,'year1':forYear1,'quartal1':myqModelSt,
+        'year2':forYear2,'quartal2':myqModelEnd}">{{entry}}</option>
+
+          </select>
+        </div>
+      -->
+      <ss-multiselect-dropdown  [settings]="mySettings2"[options]="myPatOptions" [texts]="myTexts" [(ngModel)]="myPatModel"  id="sel7"></ss-multiselect-dropdown>
+      
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-9"><ul><li *ngFor="let entry of myPatModel">{{entry}}</li></ul></div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-3 col-md-2">
+      <label for="sel8">Препараты:</label>
+    </div>
+    <div class="col-xs-3 col-md-1">
+      <div class="form-group">
+     
+      <ss-multiselect-dropdown  [settings]="mySettings2"[options]="myPrepOptions" [texts]="myTexts" [(ngModel)]="myPrepModel"  id="sel8"></ss-multiselect-dropdown>
+    
+      
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-9"><ul><li *ngFor="let entry of myPrepModel">{{entry}}</li></ul></div>
+  </div>
+
+</div>
+<!--
+<app-params></app-params>
+-->
+
+<div class="container">
+  <hr>
+  <form>
+    <div class="row"><div class="col-xs-12">
+       <div class="checkbox" style="margin-left:15px;">
+            <label style="font-weight: bold;"><input type="checkbox" [(ngModel)]="showY"name="check" value="" (change)="on2Dim()"><span>
+    
+            Двумерное отображение </span></label>
+          </div>   
+    </div></div>
+    <div class="form-group row">
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2" *ngIf="showY"> <div class="header"><label>Категории (Легенда)</label></div>
+       <!-- y-->
+       
+       <div class="radio" >
+        <label>
+          <input type="radio" name="optradio" value="region" [(ngModel)]="paramY">Регион</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio" value="city" [(ngModel)]="paramY">Регион.Город</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio" value="post" [(ngModel)]="paramY">Профессия</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio" value="preparation" [(ngModel)]="paramY">Препарат</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio" value="pathology" [(ngModel)]="paramY">Патология</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio" value="year" [(ngModel)]="paramY">Год</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio" value="yq" [(ngModel)]="paramY">Квартал</label>
+      </div>
+       
+
+      </div>
+     
+
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2"><div class="header"><label>Данные</label></div>
+<!-- x -->
+<div class="radio">
+  <label>
+    <input type="radio" name="optradio1" value="region" [(ngModel)]="paramX" >Регион</label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optradio1" value="city" [(ngModel)]="paramX">Регион.Город</label>
+</div>
+
+  <div class="radio">
+    <label>
+      <input type="radio" name="optradio1" value="post" [(ngModel)]="paramX">Профессия</label>
+  </div>
+
+<div class="radio">
+  <label>
+    <input type="radio" name="optradio1" value="preparation" [(ngModel)]="paramX">Препарат</label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optradio1" value="pathology" [(ngModel)]="paramX">Патология</label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optradio1" value="year" [(ngModel)]="paramX">Год</label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optradio1" value="yq" [(ngModel)]="paramX">Квартал</label>
+</div>
+
+</div> 
+
+      <div class="col-sm-4 col-md-2 col-lg-2"> <div class="header"><label>Вывод</label></div>
+      <!-- output-->
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio3" value="proc" [(ngModel)]="output">Процент</label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="optradio3" value="rating" [(ngModel)]="output">Рейтинг</label>
+      </div>
+      </div>
+
+     
+
+      <div class="col-sm-4 col-md-3 col-lg-2"><div class="header"><label>Тип</label> </div>
+<!-- type-->
+<div class="radio">
+  <label>
+    <input type="radio" name="optradiо4" value="bar" [(ngModel)]="type">Диаграмма</label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optradio4" value="line" [(ngModel)]="type">График</label>
+</div>
+<div class="radio" *ngIf="showY =='' || showY== undefined">
+  <label>
+    <input type="radio" name="optradio4" value="pie" [(ngModel)]="type">Круг.диаграмма</label>
+</div>
+</div>
+      <div class="col-sm-4 col-md-3" *ngIf="type=='bar'"><div class="header"><label>Ориентация</label></div>
+<!-- orient-->
+<div class="radio">
+  <label>
+    <input type="radio" name="optradiо5" value="h" [(ngModel)]="reverse">Горизонтально</label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optradiо5" value="v" [(ngModel)]="reverse">Вертикально</label>
+</div>
+
+
+      </div>
+      <div class="col-sm-3 col-md-1">
+      <button class="btn btn-danger" (click)="onChart(paramX,paramY,output,type,showY,reverse)" [disabled]="paramX==undefined || paramX==''">Вывести</button>
+    </div>
+    </div>   
+    
+  </form>
+  </div>
+
+  <!--
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Патология</th>
+              <th>Препарат</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of queryArray ">
+
+              <td> {{entry.pathology}}</td>
+              <td>{{entry.preparation}}</td>
+              <td>{{entry.post}}</td>
+              <td>{{entry.region}}</td>
+              <td>{{entry.city}}</td>
+              <td>{{entry.year}}</td>
+              <td>{{entry.quartal}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+-->

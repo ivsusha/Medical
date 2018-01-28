@@ -1,0 +1,19 @@
+.myradio{
+ padding-bottom:0px;
+}
+.dropdown-item{
+    color: #fff;
+    text-decoration: none;
+    background-color: white!important;
+}
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: white!important;color:black;
+}
+.dropdown-item:visited {
+    color: #fff;
+    text-decoration: none;
+    background-color: white!important;color:black;
+}
+

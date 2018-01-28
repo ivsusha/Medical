@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row"> <div class="col-xs-3 col-md-4"><button class="btn btn-primary mybutton" (click)="Back()">Назад</button></div>
+<div class="col-xs-9"><h4 style="color:green">Вывод результатов запроса </h4></div>
+</div>
+  <div class="row"> 
+              
+                <div class="col-xs-12 col-md-5">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="thead" style="color:white;background:#f0ad4e"> 
+                        <tr>
+                          <th *ngIf="y!=undefined && y!=''">{{getYLabel(y)}}</th>
+                          
+                          <th>{{getYLabel(x)}}</th>
+                          <th>Кол-во</th>
+                          <th>Процент</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       
+                        <tr *ngFor="let entry of toDoArray | orderby:{property:y} ">
+                            <td *ngIf="y=='pathology'">{{entry.pathology}}</td>
+                            <td *ngIf="y=='post'">{{entry.post}}</td>
+                            <td *ngIf="y=='preparation'">{{entry.preparation}}</td>
+                            <td *ngIf="y=='city'">{{entry.city}}</td>
+                            <td *ngIf="x=='region'">{{entry.region}}</td>
+                            <td *ngIf="y=='yq'">{{entry.yq}}</td>
+                            <td *ngIf="y=='year'">{{entry.year}}</td>
+                            <td *ngIf="y=='undefined'"></td>
+                          
+                          <td *ngIf="x=='pathology'">{{entry.pathology}}</td>
+                          <td *ngIf="x=='post'">{{entry.post}}</td>
+                          <td *ngIf="x=='preparation'">{{entry.preparation}}</td>
+                          <td *ngIf="x=='city'">{{entry.city}}</td>
+                          <td *ngIf="x=='region'">{{entry.region}}</td>
+                          <td *ngIf="x=='yq'">{{entry.yq}}</td>
+                          <td *ngIf="x=='year'">{{entry.year}}</td> 
+                          <td>{{entry.num}}</td>
+                          <td>{{((entry.num/total)*100).toFixed(2)}}</td>
+                         
+                          
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>  
+                <div class ="col-xs-12 col-md-7" style="display: block" id="myChart">
+                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                   [options]="options" [legend]="barChartLegend"
+                    [chartType]="barChartType" (chartHover)="chartHovered($event)"
+                     (chartClick)="chartClicked($event) "widht="400" height="400">
+                  </canvas>
+                </div>
+      </div>
+    </div>
+   
