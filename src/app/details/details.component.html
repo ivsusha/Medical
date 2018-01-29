@@ -12,13 +12,13 @@
                           <th *ngIf="y!=undefined && y!=''">{{getYLabel(y)}}</th>
                           
                           <th>{{getYLabel(x)}}</th>
-                          <th>Кол-во</th>
-                          <th>Процент</th>
+                          <th *ngIf="out=='rating'">Рейтинг</th>
+                          <th *ngIf="out=='proc'">Процент</th>
                         </tr>
                       </thead>
                       <tbody>
                        
-                        <tr *ngFor="let entry of toDoArray | orderby:{property:y} ">
+                        <tr *ngFor="let entry of toDoArray | orderby:{property:x} ">
                             <td *ngIf="y=='pathology'">{{entry.pathology}}</td>
                             <td *ngIf="y=='post'">{{entry.post}}</td>
                             <td *ngIf="y=='preparation'">{{entry.preparation}}</td>
@@ -35,8 +35,8 @@
                           <td *ngIf="x=='region'">{{entry.region}}</td>
                           <td *ngIf="x=='yq'">{{entry.yq}}</td>
                           <td *ngIf="x=='year'">{{entry.year}}</td> 
-                          <td>{{entry.num}}</td>
-                          <td>{{((entry.num/total)*100).toFixed(2)}}</td>
+                          <td *ngIf="out=='rating'">{{entry.num}}</td>
+                          <td *ngIf="out=='proc'">{{((entry.num/total)*100).toFixed(2)}}</td>
                          
                           
                         </tr>

@@ -11,7 +11,7 @@ export class DetailsComponent implements OnInit {
   toDoArray;
   total: number = 0;
   quartal: number;
-  y;x;showY;
+  y;x;showY;out;
  
   public barChartLabels:string[]= [] ;//['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   public barChartData:any[] = [];
@@ -115,10 +115,9 @@ export class DetailsComponent implements OnInit {
   //  this.toDoArray = this.postservice.getPathologyData(illness);
   this.total = this.postservice.getQueryTotal();
   console.log("total"+this.total);
-  let out = this.postservice.getOutput();
+  this.out = this.postservice.getOutput();
   this.showY= this.postservice.getshowY();
-  console.log("output"+out);
-    this.toDoArray = this.postservice.getResultArr();
+     this.toDoArray = this.postservice.getResultArr();
     this.toDoArray = this.toDoArray.sort(this.SortByNum);
     this.y = this.postservice.getParamY();
     if(this.showY==false) this.y = undefined;
@@ -146,12 +145,12 @@ export class DetailsComponent implements OnInit {
             if(ind !=-1) {
               data[ind] = entry['num'];
            
-             if(out =="proc" )data[ind]= ((data[ind]*100)/this.total).toFixed(2);
+             if(this.out =="proc" )data[ind]= ((data[ind]*100)/this.total).toFixed(2);
             }}
         })
         
         if(label == undefined ) label = "Результат";
-        if(out == "rating"){
+        if(this.out == "rating"){
        //   let data1=[7,7,5,8,8,3];       
    
         let ratarr=[];
@@ -166,14 +165,33 @@ export class DetailsComponent implements OnInit {
            
         })
         data = ratarr;
+        data.map((v,ind)=>{
+         let labX = this.barChartLabels[ind];
+
+   this.toDoArray.filter(entry=>{
+     if(this.showY){
+    if(entry[this.x]==labX && entry[this.y]==label) {entry.num =maxind - v +1;return true;}
+    else return false;
+     }
+     else{
+      if(entry[this.x]==labX ) {entry.num = v;return true;}
+      else return false;
+     }
+   })
+ //  this.toDoArray.map( (entry)=>{
+ //    if(entry[this.x]==labX && entry[this.y]==label) {entry.num = v;return;}
+//   })
+   
+        }
+      )
         }
         tmp = {'data':data,'label': label};
         this.barChartData.push(tmp);
       
-      }
+      } 
      
     )
-
+   
  //   data.push(0);
   //  let tmp = {'data':data,'label': post};
   //  this.barChartData.push(tmp);
