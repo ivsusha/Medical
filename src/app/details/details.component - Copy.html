@@ -4,7 +4,7 @@
 </div>
   <div class="row"> 
               
-                <div class="col-xs-12 col-md-5">
+                <div class="col-xs-12 col-md-6 col-lg-6">
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead class="thead" style="color:white;background:#f0ad4e"> 
@@ -12,13 +12,13 @@
                           <th *ngIf="y!=undefined && y!=''">{{getYLabel(y)}}</th>
                           
                           <th>{{getYLabel(x)}}</th>
-                          <th *ngIf="out=='rating'">Рейтинг</th>
-                          <th *ngIf="out=='proc'">Процент</th>
+                          <th *ngIf="out == 'rating'">Кол-во</th>
+                          <th *ngIf="out == 'proc'">%</th>
                         </tr>
                       </thead>
                       <tbody>
                        
-                        <tr *ngFor="let entry of tableArray">
+                        <tr *ngFor="let entry of toDoArray | orderby:{property:y} ">
                             <td *ngIf="y=='pathology'">{{entry.pathology}}</td>
                             <td *ngIf="y=='post'">{{entry.post}}</td>
                             <td *ngIf="y=='preparation'">{{entry.preparation}}</td>
@@ -35,8 +35,8 @@
                           <td *ngIf="x=='region'">{{entry.region}}</td>
                           <td *ngIf="x=='yq'">{{entry.yq}}</td>
                           <td *ngIf="x=='year'">{{entry.year}}</td> 
-                          <td *ngIf="out=='rating'">{{entry.num}}</td>
-                          <td *ngIf="out=='proc'">{{((entry.num/total)*100).toFixed(2)}}</td>
+                          <td *ngIf="out == 'rating'">{{entry.num}}</td>
+                          <td *ngIf="out == 'proc'">{{((entry.num/total)*100).toFixed(2)}}</td>
                          
                           
                         </tr>
@@ -44,7 +44,7 @@
                     </table>
                   </div>
                 </div>  
-                <div class ="col-xs-12 col-md-7" style="display: block" id="myChart">
+                <div class ="col-xs-12 col-md-6" style="display: block" id="myChart">
                   <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
                    [options]="options" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)"
@@ -52,5 +52,39 @@
                   </canvas>
                 </div>
       </div>
+
+      <div class="row"> 
+              
+        <div class="col-xs-12 col-md-6 col-lg-6">
+          <div class="table-responsive">
+            <table class="table">
+                <thead class="thead" style="color:white;background:#f0ad4e"> 
+                    <tr>
+                      <th *ngIf="y!=undefined && y!=''">{{getYLabel(y)}}</th>
+                     
+                      <th>{{getYLabel(x)}}</th>                     
+                      <th *ngIf="out == 'rating'">Рейтинг</th>
+                      <th *ngIf="out == 'proc'">Процент</th>                   
+                    
+                    </tr>
+                  </thead>
+              <tbody>
+               
+                <tr *ngFor="let entry of tableData">
+                   <td>{{entry['label']}}</td>
+                 <td>
+                   <tr *ngFor="let entry2 of entry['data']">
+                      <td>{{entry2['xname']}}</td>
+                     
+                      <td>{{entry2['num']}}</td>
+                   </tr>  
+                  </td>         
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>  
+       
+</div>
     </div>
    

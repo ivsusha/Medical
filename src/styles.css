@@ -2,8 +2,19 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.css";
 .header{
-    background: #f0ad4e;
+    background: #ffc107;
     color:white;
     padding-left:5px;
-   border-radius: 10px;
+    border-radius: 10px;
+}
+.dropdown-item {
+    color:black;
+    text-decoration: none;
+    background-color: white!important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: white!important;
 }

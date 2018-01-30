@@ -107,7 +107,7 @@ mySettings2: IMultiSelectSettings = {
   fixedTitle: true,
   dynamicTitleMaxItems: 3,
   maxHeight: '300px',
-  isLazyLoad: true,
+ // isLazyLoad: true,
   loadViewDistance: 1,
   stopScrollPropagation: true,
   selectAddedValues: true
