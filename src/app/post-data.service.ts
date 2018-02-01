@@ -8,7 +8,7 @@ export class PostDataService {
  paramX ="";
  paramY= "";
  type ="bar";
- showY;
+ showY;top10;
  output="proc";
  reverse= "h"; 
  filter=[];
@@ -73,11 +73,12 @@ this.filter['pathology']= pathology;
 this.filter['preparation']= preparation;
 }
 getFilter(){return this.filter};
-setParamsXY(x,y,output,type,showY,reverse){
+setParamsXY(x,y,output,type,showY,reverse,top10){
   this.paramX = x;
   this.paramY = y;
   this.output = output;
   this.type = type;
+  this.top10 = top10;
   this.showY = showY;
   this.reverse = reverse;
 }
@@ -87,6 +88,7 @@ getParamY(){
   return this.paramY };
 getOutput(){ return this.output };
 getType(){  return this.type};
+getTop10(){  return this.top10};
 getReverse(){return this.reverse};
 setReverse(reverse){
   this.reverse = reverse;

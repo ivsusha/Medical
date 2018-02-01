@@ -226,6 +226,13 @@
         <label>
           <input type="radio" name="optradio3" value="rating" [(ngModel)]="output">Рейтинг</label>
       </div>
+      <hr>
+      <div class="checkbox" >
+        <label style="font-weight: bold;"><input type="checkbox" [(ngModel)]="top10"name="top10" value="" (change)="onTop()">
+          <span style="color:red">
+
+        Топ 10 </span></label>
+      </div>
       </div>
 
      
@@ -259,7 +266,7 @@
 
       </div>
       <div class="col-sm-3 col-md-1">
-      <button class="btn btn-danger" (click)="onChart(paramX,paramY,output,type,showY,reverse)" [disabled]="paramX==undefined || paramX==''">Вывести</button>
+      <button class="btn btn-danger" (click)="onChart(paramX,paramY,output,type,showY,reverse,top10)" [disabled]="paramX==undefined || paramX==''">Вывести</button>
     </div>
     </div>   
     

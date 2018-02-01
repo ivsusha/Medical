@@ -33,7 +33,7 @@ export class MainComponent implements OnInit {
   forYear2;
   forQuartal2:any[] = [];;
   year: any[] = [];
- 
+  top10=false;
   regionY = false;
 cityY = true;
 postY = false;
@@ -51,6 +51,7 @@ paramX;paramY;output;type;showY;reverse;
     this.showY = this.postservice.getshowY();
     this.output = this.postservice.getOutput();
     this.reverse = this.postservice.getReverse();
+    this.top10 = this.postservice.getTop10();
   }
   //myOptions: IMultiSelectOption[];
   myCityModel:string[];
@@ -176,6 +177,7 @@ mySettings2: IMultiSelectSettings = {
     this.region = this.mservice.getRegion();
     this.city = this.mservice.getCity();
     this.post = this.mservice.getPost();
+  //  this.top10 = 
     this.pathology = this.mservice.getPathology();
     this.preparation = this.mservice.getPreparation();
     this.myCityOptions = this.createMultiSelLists(this.city,this.mylistarr);
@@ -285,14 +287,14 @@ setResultX(items: any[], criteria1: any,criteria2: any): any {
 
   });  
 }
-onChart(paramX,paramY,output,type,showY,reverse){
+onChart(paramX,paramY,output,type,showY,reverse,top10){
    this.postservice.saveFilter(this.myRegionModel,this.myCityModel,this.mypostModel,this.forYear1,
     this.myqModelSt,this.forYear2,this.myqModelEnd,this.myPatModel,this.myPrepModel)
   this.onQuery();
   if( this.showY==false)this.setResultX( this.postservice.getQueryArray(),paramX,paramY);
   else this.setResult( this.postservice.getQueryArray(),paramX,paramY);
    this.postservice.setResultArray(this.resultArr); 
-   this.postservice.setParamsXY(paramX,paramY,output,type,showY,reverse);
+   this.postservice.setParamsXY(paramX,paramY,output,type,showY,reverse,top10);
    this.router.navigate(['/details']);
  
  }

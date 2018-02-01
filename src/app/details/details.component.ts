@@ -13,7 +13,7 @@ export class DetailsComponent implements OnInit {
   total: number = 0;
   quartal: number;
   y; x; showY; out;
-
+  tmplabel = [];
   public barChartLabels: string[] = [];//['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
   public barChartData: any[] = [];
   public barChartType: string = 'horizontalBar';
@@ -106,13 +106,13 @@ export class DetailsComponent implements OnInit {
               beginAtZero: true,
               suggestedMin: 0,
               callback: function (value, index, values) {
-               return (value % 1 === 0) ? value : null;
+              return (value % 1 === 0) ? value : null;             
               }
             }
           }]
         },
         tooltips: {
-          enabled: false
+                    enabled: false      
         }
       }
     });
@@ -121,8 +121,7 @@ export class DetailsComponent implements OnInit {
 
     //  const illness : string = this.route.snapshot.params['pathology'];
     //  this.toDoArray = this.postservice.getPathologyData(illness);
-    this.total = this.postservice.getQueryTotal();
-    console.log("total" + this.total);
+    this.total = this.postservice.getQueryTotal();    
     this.out = this.postservice.getOutput();
     this.showY = this.postservice.getshowY();
     this.toDoArray = this.postservice.getResultArr();
@@ -130,34 +129,41 @@ export class DetailsComponent implements OnInit {
     this.y = this.postservice.getParamY();
     if (this.showY == false) this.y = undefined;
     this.x = this.postservice.getParamX();
-    let tmplabel = [];
+    let top10 = this.postservice.getTop10();
     let tmp;
     //tmplabel - legenda; barChartLabel- labels;
+  
     this.toDoArray.map((entry) => {
-      this.barChartLabels.push(entry[this.x]);//' ex. medicin; X'
-
-      tmplabel.push(entry[this.y]); //Y
+      if(!top10) this.barChartLabels.push(entry[this.x]);//' ex. medicin; X'      
+      this.tmplabel.push(entry[this.y]); //Y
     });
-    this.barChartLabels = this.barChartLabels.filter((v, i, a) => a.indexOf(v) === i);//unique; X
-    tmplabel = tmplabel.filter((v, i, a) => a.indexOf(v) === i); //'ex. post'
-
-    tmplabel.map(
-
-      (label) => {
+    this.tmplabel = this.tmplabel.filter((v, i, a) => a.indexOf(v) === i); //'ex. post'
+    if(top10) this.transformTop10();
+    this.barChartLabels = this.barChartLabels.filter((v, i, a) => a.indexOf(v) === i);//unique; X    
+   
+    this.barChartLabels.push("");
+    this.tmplabel.map(  
+     (label) => {       
         let data: any[] = [];
         this.barChartLabels.map((v, i) => { data[i] = 0; })
-       
-        this.toDoArray.map((entry) => {
+   
+       let entry;
+       for(let i in this.toDoArray){
+         entry=this.toDoArray[i];
+    //    this.toDoArray.every((entry) => {
+         
           //label post; ex. terapevt
           if (label == entry[this.y]) {
             let ind = this.barChartLabels.indexOf(entry[this.x]);
             if (ind != -1) {
+           
               data[ind] = entry['num'];
 
               if (this.out == "proc") data[ind] = ((data[ind] * 100) / this.total).toFixed(2);
             }
           }
-        })
+         
+        }
 
         if (label == undefined) label = "Результат";
         if (this.out == "rating") {
@@ -179,33 +185,17 @@ export class DetailsComponent implements OnInit {
           data.map((v, ind) => {
             let labX = this.barChartLabels[ind];
 
-    //       this.toDoArray.filter(entry => {
-    //          if (this.showY) {
-    //           if (entry[this.x] == labX && entry[this.y] == label) { entry.num = maxind - v + 1; return true; }
-    //            else return false;
-    //         }
-    //          else {
-    //            if (entry[this.x] == labX) { entry.num = v; return true; }
-    //            else return false;
-    //          }
-   //         })
+   
    for (var i = 0; i < this.toDoArray.length; i++) {
     if( this.toDoArray[i][this.x]==labX &&( (this.toDoArray[i][this.y]==label && this.showY)||
-  (this.showY==false ))) {
+  (!this.showY ))) {
       this.toDoArray[i].num =  maxind - v + 1; 
       break;}
    }
    
-              
-      //        this.toDoArray.map( (entry)=>{             
-       //        if(entry[this.x]==labX && entry[this.y]==label) {
-       //           entry.num =  maxind - v + 1;
-       //           return;}
-       //        })
-
           }
           )
-        }
+        }       
         tmp = { 'data': data, 'label': label };
         this.barChartData.push(tmp);
 
@@ -214,12 +204,16 @@ export class DetailsComponent implements OnInit {
     )
     //sort by 'y' and number
     if (this.showY) {
-      tmplabel.map(
+      this.tmplabel.map(
         (legend) => {
+          let tmparr=[];
           this.toDoArray.map(entry => {
-            if (entry[this.y] == legend) { this.tableArray.push(entry) }
+            if (entry[this.y] == legend) { tmparr.push(entry) }
           })
-        }
+          tmparr.sort(this.SortByNumAsc);
+          this.tableArray=this.tableArray.concat(tmparr);
+        },
+       
       )
     }
     else{this.tableArray = this.toDoArray}
@@ -229,7 +223,9 @@ export class DetailsComponent implements OnInit {
   SortByNum(x, y) {
     return y.num - x.num;
   }
-
+  SortByNumAsc(x, y) {
+    return x.num - y.num;
+  }
 
   public chartHovered(e: any): void {
     console.log(e);
@@ -260,5 +256,42 @@ export class DetailsComponent implements OnInit {
   Back() {
     this.router.navigate(["/"]);
   }
-
+  transformTop10(){
+   let tmpTodo=[];
+    let tmpl =[];
+    if(this.showY){
+    for(let i=0;i<this.tmplabel.length;i++){
+      if(i>=10) break;
+      tmpl[i] = this.tmplabel[i];
+    }
+  
+  
+    this.tmplabel = tmpl;
+    this.tmplabel.map((entry) => {
+      let iter=0;
+      for(let i=0;i<this.toDoArray.length;i++){
+        if(iter>=10) break;       
+        if(this.toDoArray[i][this.y]=== entry ) {tmpTodo.push(this.toDoArray[i]);       
+        iter+=1;
+        }       
+      }
+     
+    });
+  }
+  else{
+    let iter =0;
+    for(let i=0;i<this.toDoArray.length;i++){
+      if(iter>=10) break;
+      tmpTodo.push(this.toDoArray[i]);  
+      iter+=1; 
+    }
+  }
+    this.toDoArray = tmpTodo;
+    this.toDoArray.sort(this.SortByNum);
+    this.barChartLabels=[];
+    this.toDoArray.map((entry) => {
+      this.barChartLabels.push(entry[this.x]);//' ex. medicin; X'      
+      
+    });
+  }
 }

@@ -14,7 +14,6 @@ import { ChartComponent } from './chart/chart.component';
 import { DetailsComponent } from './details/details.component';
 import { PostDataService } from './post-data.service';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { ParamsComponent } from './params/params.component';
 import { KeysPipe } from './keys.pipe';
 
 export const appRoutes: Routes =[
@@ -32,8 +31,7 @@ export const appRoutes: Routes =[
     OrderbyPipe,
     ByMedicamentPipe,
     ChartComponent,
-    DetailsComponent,
-    ParamsComponent,
+    DetailsComponent,   
     KeysPipe
     
   ],
