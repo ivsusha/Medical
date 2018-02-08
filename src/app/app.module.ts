@@ -15,6 +15,7 @@ import { DetailsComponent } from './details/details.component';
 import { PostDataService } from './post-data.service';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { KeysPipe } from './keys.pipe';
+import {TabModule} from 'angular-tabs-component';
 
 export const appRoutes: Routes =[
   { path: '', component: MainComponent, pathMatch: 'full'},
@@ -41,8 +42,8 @@ export const appRoutes: Routes =[
     HttpModule,
     MultiselectDropdownModule,
     RouterModule.forRoot(appRoutes,{useHash:true}),
-    ChartsModule
-  
+    ChartsModule,
+    TabModule  
   ], 
   providers: [MainService, PostDataService],
   entryComponents: [

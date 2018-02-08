@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostDataService } from '../post-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as Chart from 'chart.js';
+//import * as Chart from 'chart.js';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -37,8 +37,34 @@ export class DetailsComponent implements OnInit {
     console.log(e);
   }
  
-  public options: {
+  public options:any = {
+    legend: { display: true },
     responsive: true,
+    scaleShowVerticalLines: false,
+    tooltips: {
+      enabled: true,
+      callbacks: {
+       
+        label: function (tooltipItems, data) {
+          let datasetind= tooltipItems.datasetIndex;
+          if(data.datasets[0].mode=="proc" ){
+            let val = data.datasets[datasetind].data[tooltipItems.index];
+           if(val>0) return data.datasets[datasetind].label.slice(0,20)+
+          ". "+ data.datasets[datasetind].data[tooltipItems.index];}
+
+          var i, label = [], l = data.datasets.length;
+          let d1;let uniqarr1;
+        let  uniqarr=[];
+       //   for (i = 0; i < l; i += 1) {
+      //  let datasetind= tooltipItems.datasetIndex;
+        uniqarr1 = data.datasets[datasetind].data.filter((v, i, a) => a.indexOf(v) === i && v!=0);
+        d1=data.datasets[datasetind].data[tooltipItems.index];
+        let r1 =(uniqarr1.indexOf(d1))+1;
+        if(r1>0)return (data.datasets[datasetind].label.slice(0,20)+". Рейтинг "+ r1);
+
+         },
+         }     
+    },
   scaleShowValues: true,
     scales: {
       yAxes: [{
@@ -63,59 +89,59 @@ export class DetailsComponent implements OnInit {
  
 
   ngOnInit() {
-    var ctx = document.getElementById("myChart");
+//    var ctx = document.getElementById("myChart");
 
-    var myChart = new Chart(ctx, {
+ //   var myChart = new Chart(ctx, {
       //  type: 'horizontalBar',   
-      type: this.barChartType,
-      data: {
-        datasets: [
-          {
-            backgroundColor: "rgba(0,130,200,0.4)",
+//      type: this.barChartType,
+ //     data: {
+ //       datasets: [
+//          {
+ //           backgroundColor: "rgba(0,130,200,0.4)",
 
-          }
-        ]
-      },
-      options: {
-        elements: {
-          point: {
-            radius: 0,
-            hoverRadius: 0,
-          }
-        },
-        legend: {
-          display: true,
-        },
-        maintainAspectRatio: false,
-        responsive: true,
-        scales: {
-          xAxes: [{
-            beginAtZero: true,
-            suggestedMin:0,
-            bounds: 'ticks',
+ //         }
+ //       ]
+//      },
+ //     options: {
+ //       elements: {
+ //         point: {
+ //           radius: 0,
+ //           hoverRadius: 0,
+ //         }
+ //       },
+ //       legend: {
+ //         display: true,
+ //       },
+ //       maintainAspectRatio: false,
+ //       responsive: true,
+ //       scales: {
+ //         xAxes: [{
+ //           beginAtZero: true,
+ //           suggestedMin:0,
+ //           bounds: 'ticks',
 
-            stacked: false,
-            ticks: {
-              autoSkip: false, // doesn't work
-              min: 0,
-              stepSize: 1,
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              suggestedMin: 0,
-              callback: function (value, index, values) {
-              return (value % 1 === 0) ? value : null;             
-              }
-            }
-          }]
-        },
-        tooltips: {
-                    enabled: false      
-        }
-      }
-    });
+//            stacked: false,
+//            ticks: {
+ //             autoSkip: false, // doesn't work
+ //             min: 0,
+ //             stepSize: 1,
+ //           }
+ //         }],
+ //         yAxes: [{
+ //           ticks: {
+ //             beginAtZero: true,
+ //             suggestedMin: 0,
+ //             callback: function (value, index, values) {
+ //             return (value % 1 === 0) ? value : null;             
+ //             }
+ //           }
+ //         }]
+ //       },
+ //       tooltips: {
+ //                   enabled: false      
+ //       }
+ //     }
+ //   });
 
 
 
@@ -170,11 +196,12 @@ export class DetailsComponent implements OnInit {
           //   let data1=[7,7,5,8,8,3];       
 
           let ratarr = [];
+         
           //set rating
           let uniqarr = data.filter((v, i, a) => a.indexOf(v) === i && v!=0);
           let maxind = uniqarr.length;
           data.map((v, ind) => {
-            if(v==0) return ratarr[ind]=0;
+            if(v==0) return ratarr[ind]=0; 
             if (uniqarr.includes(v)) {
               let i = uniqarr.indexOf(v);              
               return ratarr[ind] = maxind - i;
@@ -196,7 +223,7 @@ export class DetailsComponent implements OnInit {
           }
           )
         }       
-        tmp = { 'data': data, 'label': label };
+        tmp = { 'data': data, 'label': label,mode:this.out };
         this.barChartData.push(tmp);
 
       }
@@ -210,7 +237,8 @@ export class DetailsComponent implements OnInit {
           this.toDoArray.map(entry => {
             if (entry[this.y] == legend) { tmparr.push(entry) }
           })
-          tmparr.sort(this.SortByNumAsc);
+         if(this.out=="rating") tmparr.sort(this.SortByNumAsc);
+         else tmparr.sort(this.SortByNum);
           this.tableArray=this.tableArray.concat(tmparr);
         },
        

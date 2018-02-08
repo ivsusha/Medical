@@ -2,6 +2,73 @@
   <div class="row"> <div class="col-xs-3 col-md-4"><button class="btn btn-primary mybutton" (click)="Back()">Назад</button></div>
 <div class="col-xs-9"><h4 style="color:green">Вывод результатов запроса </h4></div>
 </div>
+
+<tabs>
+    <tab tabTitle="Таблица">
+        <div class="row"> 
+              
+        <div class="col-xs-12 col-md-12">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="thead" style="color:white;background:#f0ad4e"> 
+                <tr>
+                  <th *ngIf="y!=undefined && y!=''">{{getYLabel(y)}}</th>
+                  
+                  <th>{{getYLabel(x)}}</th>
+                  <th *ngIf="out=='rating'">Рейтинг</th>
+                  <th *ngIf="out=='proc'">Процент</th>
+                </tr>
+              </thead>
+              <tbody>
+               
+                <tr *ngFor="let entry of tableArray">
+                    <td *ngIf="y=='pathology'">{{entry.pathology}}</td>
+                    <td *ngIf="y=='post'">{{entry.post}}</td>
+                    <td *ngIf="y=='preparation'">{{entry.preparation}}</td>
+                    <td *ngIf="y=='city'">{{entry.city}}</td>
+                    <td *ngIf="x=='region'">{{entry.region}}</td>
+                    <td *ngIf="y=='yq'">{{entry.yq}}</td>
+                    <td *ngIf="y=='year'">{{entry.year}}</td>
+                    <td *ngIf="y=='undefined'"></td>
+                  
+                  <td *ngIf="x=='pathology'">{{entry.pathology}}</td>
+                  <td *ngIf="x=='post'">{{entry.post}}</td>
+                  <td *ngIf="x=='preparation'">{{entry.preparation}}</td>
+                  <td *ngIf="x=='city'">{{entry.city}}</td>
+                  <td *ngIf="x=='region'">{{entry.region}}</td>
+                  <td *ngIf="x=='yq'">{{entry.yq}}</td>
+                  <td *ngIf="x=='year'">{{entry.year}}</td> 
+                  <td *ngIf="out=='rating'">{{entry.num}}</td>
+                  <td *ngIf="out=='proc'">{{((entry.num/total)*100).toFixed(2)}}</td>
+                 
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>  
+    </div>
+
+    </tab>
+    <tab tabTitle="Диаграмма" active="true">
+        <div class="row" >
+            <div class ="col-xs-12 col-md-12" style="display: block;" id="myChart" style="background-color:rgb(238, 238, 238)">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                 [options]="options" [legend]="barChartLegend"
+                  [chartType]="barChartType" (chartHover)="chartHovered($event)"
+                   (chartClick)="chartClicked($event) "widht="400" height="400">
+                </canvas>
+              </div>
+        
+        
+        </div>
+        
+    </tab>
+  </tabs>
+
+
+<!--
+
   <div class="row"> 
               
                 <div class="col-xs-12 col-md-5">
@@ -48,9 +115,10 @@
                   <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
                    [options]="options" [legend]="barChartLegend"
                     [chartType]="barChartType" (chartHover)="chartHovered($event)"
-                     (chartClick)="chartClicked($event) "widht="400" height="400">
+                     (chartClick)="chartClicked($event) "widht="600" height="800">
                   </canvas>
                 </div>
       </div>
+    -->
     </div>
    

@@ -15,16 +15,20 @@ export class ChartComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true,
     tooltips: {
+      enabled: true,
       callbacks: {
         label: function (tooltipItems, data) {
           var i, label = [], l = data.datasets.length;
-         
-          for (i = 0; i < l; i += 1) {
-            let uniqarr = data.datasets[i].data.filter((v, i, a) => a.indexOf(v) === i && v!=0);
-            let r =uniqarr.indexOf(tooltipItems.yLabel);
-              label[i] =tooltipItems.yLabel+"rat"+ r + ";"+data.datasets[i].label + ' : ' + '$' + data.datasets[i].data[tooltipItems.index];
-          }
-          return label;
+          let d1;let uniqarr1;
+        let  uniqarr=[];
+       //   for (i = 0; i < l; i += 1) {
+        let datasetind= tooltipItems.datasetIndex;
+        uniqarr1 = data.datasets[datasetind].data.filter((v, i, a) => a.indexOf(v) === i && v!=0);
+        d1=data.datasets[datasetind].data[tooltipItems.index];
+        let r1 =(uniqarr1.indexOf(d1))+1;
+        return (data.datasets[datasetind].data[tooltipItems.index]+". Рейтинг "+ r1);
+       //return tooltipItems.labely+"Рейтинг "+ r1;
+
          },
          }     
 }
@@ -35,7 +39,7 @@ export class ChartComponent implements OnInit {
  
   public barChartData:any[] = [
     {data: [65, 59, 80, 80, 80, 55, 40,65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90,65, 59, 80, 81, 56, 55, 40], label: 'Series B'}
+    {data: [28, 48, 40, 19, 86, 27, 27,27, 59, 80, 81, 56, 55, 40], label: 'Series B'}
   ];
  
   // events
